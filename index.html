@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Training Plans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a two-door lobby. Each plan is one large link card led by its defining number (race distance, plan length); cards sit side by side on desktop and stack on phones. */
+:root {
+  --bg: #F3F2F5;
+  --surface: #FFFFFF;
+  --ink: #1C1A21;
+  --muted: #625C6B;
+  --line: #DFDBE4;
+  --run: #1F5FA8;
+  --run-soft: #E1EBF7;
+  --glute: #B8235A;
+  --glute-soft: #F8E2EB;
+  --font-display: "Big Shoulders Display", "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121015; --surface: #1B1820; --ink: #F1EDF4; --muted: #A59DAE; --line: #2F2A36;
+    --run: #74ACEF; --run-soft: #172538; --glute: #F0739F; --glute-soft: #3B1929;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121015; --surface: #1B1820; --ink: #F1EDF4; --muted: #A59DAE; --line: #2F2A36;
+  --run: #74ACEF; --run-soft: #172538; --glute: #F0739F; --glute-soft: #3B1929;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+h1, p { margin: 0; }
+
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 5vw, 40px);
+  padding-block: clamp(32px, 8vh, 88px) 48px;
+  display: grid;
+  gap: clamp(24px, 4vw, 40px);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+header { display: grid; gap: 10px; }
+h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 9vw, 4.6rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.lede { color: var(--muted); max-width: 48ch; }
+
+.plans {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+}
+
+.plan {
+  --c: var(--run);
+  --c-soft: var(--run-soft);
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: clamp(20px, 3.5vw, 32px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+.plan.glute { --c: var(--glute); --c-soft: var(--glute-soft); }
+.plan:hover { border-color: var(--c); }
+.plan:focus-visible { outline: 3px solid var(--c); outline-offset: 3px; }
+
+.plan-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--c);
+  background: var(--c-soft);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.file { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.plan-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(4.2rem, 13vw, 6.4rem);
+  line-height: 0.85;
+  color: var(--c);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.plan-num small {
+  font-size: 0.32em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.plan-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.plan-desc { color: var(--muted); max-width: 40ch; }
+.plan-cta {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--c);
+}
+.plan-cta svg { width: 18px; height: 18px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .plan { transition: border-color 0.15s ease, transform 0.15s ease; }
+  .plan:hover { transform: translateY(-2px); }
+  .plan-cta svg { transition: transform 0.15s ease; }
+  .plan:hover .plan-cta svg { transform: translateX(3px); }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Choose a plan</p>
+    <h1>Training Plans</h1>
+    <p class="lede">Pick a plan to open it.</p>
+  </header>
+
+  <nav class="plans" aria-label="Training plans">
+    <a class="plan" href="hm-plan.html">
+      <span class="plan-top"><span class="pill">Running</span><span class="file"></span></span>
+      <span class="plan-num">21.1<small>km</small></span>
+      <span class="plan-title">Half marathon plan</span>
+      <span class="plan-desc">From 5K on 1 October 2026 to race day on 4 April 2027, with a pace calculator and progress tracking.</span>
+      <span class="plan-cta">Open plan
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4-4.5L15.5 10 11 14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+
+    <a class="plan glute" href="glute-plan.html">
+      <span class="plan-top"><span class="pill">Strength</span><span class="file"></span></span>
+      <span class="plan-num">12<small>weeks</small></span>
+      <span class="plan-title">Glute plan</span>
+      <span class="plan-desc">Light fitness with three strength sessions a week focused on the glutes, plus easy cardio. Gym and home versions.</span>
+      <span class="plan-cta">Open plan
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4-4.5L15.5 10 11 14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+  </nav>
+</main>
+</body>
+</html>
